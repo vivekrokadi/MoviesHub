@@ -37,43 +37,46 @@ function App() {
   );
 
   const fetchMovies = async (query = "") => {
-    setIsLoading(true);
-    try {
-      let fetchedMovies = [];
+  setIsLoading(true);
+  try {
+    let fetchedMovies = [];
 
-      if (query.trim() === "") {
-        // Fetch popular movies
-        fetchedMovies = await Promise.all(
-          popularMovieIDs.map(async (id) => {
-            const endpoint = `${API_BASE_URL}?apikey=${API_KEY}&i=${id}&plot=full`;
-            const response = await fetch(endpoint);
-            const data = await response.json();
-            return data;
-          })
-        );
-      } else {
-        // Fetch search results
-        const endpoint = `${API_BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(
-          query
-        )}&plot=full`;
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        fetchedMovies = data.Search || []; // in case no results
-      }
-
-      const validMovies = fetchedMovies.filter(
-        (movie) => movie.Response !== "False"
+    if (query.trim() === "") {
+      fetchedMovies = await Promise.all(
+        popularMovieIDs.map(async (id) => {
+          const endpoint = `${API_BASE_URL}?apikey=${API_KEY}&i=${id}&plot=full`;
+          const response = await fetch(endpoint);
+          const data = await response.json();
+          return data;
+        })
       );
-      setPopularMovies(validMovies);
-      setErrorMessage(null);
-    } catch (error) {
-      console.error(`Error fetching movies: ${error}`);
-      setErrorMessage("Error fetching movies. Please try again later.");
-      setPopularMovies([]);
-    } finally {
-      setIsLoading(false);
+    } else {
+      const searchEndpoint = `${API_BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(query)}`;
+      const searchResponse = await fetch(searchEndpoint);
+      const searchData = await searchResponse.json();
+      const searchResults = searchData.Search || [];
+
+      fetchedMovies = await Promise.all(
+        searchResults.map(async (movie) => {
+          const detailsEndpoint = `${API_BASE_URL}?apikey=${API_KEY}&i=${movie.imdbID}&plot=short`;
+          const detailsResponse = await fetch(detailsEndpoint);
+          return await detailsResponse.json();
+        })
+      );
     }
-  };
+
+    const validMovies = fetchedMovies.filter((movie) => movie.Response !== "False");
+    setPopularMovies(validMovies);
+    setErrorMessage(null);
+  } catch (error) {
+    console.error(`Error fetching movies: ${error}`);
+    setErrorMessage("Error fetching movies. Please try again later.");
+    setPopularMovies([]);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchMovies();
@@ -87,11 +90,10 @@ function App() {
     <main>
       <div className="pattern" />
       <div className="wrapper">
-      <nav className="w-full  flex items-center">
-        <img className="w-[40px]" src="logo.png" alt="" /> 
-        <h4 className="text-[20px] text-white font-medium">MoviesHub</h4>
-       
-      </nav>
+      {/* <nav className="w-full  flex items-center gap-1">
+        <img className="w-[40px] sm:w-[60px]" src="logo.png" alt="" /> 
+        <h4 className="text-xl sm:text-3xl  text-white font-medium">MoviesHub</h4>
+      </nav> */}
         <header>
           <img src="/hero.png" alt="Hero" />
           <h1>

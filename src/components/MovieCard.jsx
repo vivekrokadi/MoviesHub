@@ -6,9 +6,9 @@ const MovieCard = ({
   return (
     <div className="movie-card">
       <img
-        src={Poster !== "N/A" ? Poster : "/fallback.jpg"}
+        src={Poster && Poster !== "N/A" ? Poster : "/no-movie.png"}
         alt={Title}
-        className=""
+        className="w-full h-80 object-cover rounded-lg"
       />
 
       <div className="mt-4">
@@ -21,7 +21,7 @@ const MovieCard = ({
           </div>
 
           <span>•</span>
-          <p>{Language}</p>
+          <p>{Language?.split(",")[0]}</p>
 
           <span>•</span>
           <p>{Year}</p>

@@ -2,9 +2,12 @@
 
 **MoviesHub** is a sleek, modern movie discovery web app built with **React.js**, **Vite**, and **Tailwind CSS**. It uses the **OMDb API** to let users search and explore details of popular movies with an elegant and responsive UI.
 
-![Screenshot](./m1.png)
-![Screenshot](./m2.png)
-![Screenshot](./m3.png)
+<p align="center">
+  <img src="./m1.png" width="300"/>
+  <img src="./m2.png" width="300"/>
+  <img src="./m3.png" width="300"/>
+</p>
+
 
 ---
 

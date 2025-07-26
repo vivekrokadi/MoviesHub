@@ -6,6 +6,7 @@
   <img src="./m1.png" width="300"/>
   <img src="./m2.png" width="300"/>
   <img src="./m3.png" width="300"/>
+  <img src="./m4.png" width="300"/>
 </p>
 
 
@@ -19,6 +20,9 @@
 - 📂 Fallback poster image for unavailable movies
 - 💡 Responsive layout with Tailwind CSS
 - 🧠 Built using modern React hooks (`useState`, `useEffect`, `useDebounce`)
+- ✨ Movie Details Page – Click a movie card to see plot, director, genre, cast, runtime, and more!
+- ⚡ Smooth navigation with react-router-dom
+- 🌀 loading spinners and improved UX on data fetching
 
 ---
 
@@ -28,7 +32,7 @@
 - 🎨 Tailwind CSS
 - 🌐 OMDb API
 - 🧰 React Hooks
-- 💡 Utility: `react-use` for debounce
+- 🧭 React Router
 
 ---
 

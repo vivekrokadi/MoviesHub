@@ -51,9 +51,9 @@ function MovieDetails() {
               {movie.Title} ({movie.Year})
             </h2>
             <p className="mt-2 text-xl text-gray-400">{movie.Plot}</p>
-            <ul className="mt-4 text-xl space-y-2 text-gray-400">
-              <li>
-                <strong>Rating:</strong> ⭐ {movie.imdbRating}
+            <ul className="mt-4 text-lg space-y-2 text-gray-400">
+              <li className="flex gap-1">
+                <strong>Rating:</strong> <img src="/star.svg" alt="" /> {movie.imdbRating}
               </li>
               <li>
                 <strong>Genre:</strong> {movie.Genre}

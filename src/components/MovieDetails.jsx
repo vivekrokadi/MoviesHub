@@ -50,8 +50,8 @@ function MovieDetails() {
             <h2 className="text-2xl sm:text-3xl font-bold">
               {movie.Title} ({movie.Year})
             </h2>
-            <p className="mt-2 text-xl text-gray-400">{movie.Plot}</p>
-            <ul className="mt-4 text-lg space-y-2 text-gray-400">
+            <p className="mt-2 text-lg sm:text-xl text-gray-400">{movie.Plot}</p>
+            <ul className="mt-4 text-base sm:text-lg space-y-2 text-gray-400">
               <li className="flex gap-1">
                 <strong>Rating:</strong> <img src="/star.svg" alt="" /> {movie.imdbRating}
               </li>

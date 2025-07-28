@@ -96,7 +96,7 @@ function Home() {
       </nav> */}
         <header>
           <img src="/hero.png" alt="Hero" />
-          <h1>
+          <h1 className="text-4xl p-6 sm:text-6xl" >
             Find <span className="text-gradient">Movies</span> You'll Enjoy
             Without Hassle
           </h1>

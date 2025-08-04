@@ -36,7 +36,7 @@ function MovieDetails() {
       <div className="wrapper">
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 text-3xl text-white self-start   font-bold"
+          className="mb-4 text-3xl text-white self-start border-2 border-white rounded-md px-4 py-1 font-bold cursor-pointer hover:scale-105 transition duration-300"
         >
           &larr;
         </button>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Spinner from "./Spinner";
+import Spinner from "../components/Spinner";
 
 const API_BASE_URL = "https://www.omdbapi.com/";
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;

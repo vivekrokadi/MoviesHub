@@ -9,7 +9,7 @@ function Navbar() {
 
   return (
     <nav className="w-full px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-      {/* Logo */}
+      
       <Link to="/" className="flex items-center gap-2">
         <img
           className="w-[120px] sm:w-[150px]"
@@ -18,7 +18,7 @@ function Navbar() {
         />
       </Link>
 
-      {/* Desktop Menu */}
+     
       <ul className="hidden md:flex items-center gap-6 text-white font-semibold">
         <li><Link to="/">Home</Link></li>
         <li><Link to="/watchlist">Watchlist</Link></li>
@@ -43,7 +43,7 @@ function Navbar() {
         )}
       </ul>
 
-      {/* Mobile Hamburger Button */}
+      
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="md:hidden text-white text-2xl focus:outline-none"
@@ -51,7 +51,7 @@ function Navbar() {
         {isOpen ? "✖" : "☰"}
       </button>
 
-      {/* Mobile Dropdown Menu */}
+      
       {isOpen && (
         <div className="absolute top-16 left-0 w-full  flex flex-col items-center gap-6 py-6 md:hidden text-white font-semibold backdrop-blur-xs">
           <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>

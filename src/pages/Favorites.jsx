@@ -8,8 +8,10 @@ function Favorites() {
   const navigate = useNavigate();
   return (
     <div>
-      <main className="wrapper">
-        <div className="flex justify-center">
+      <main>
+        <div className="pattern" />
+        <div className="wrapper">
+            <div className="flex justify-center">
           <button
             onClick={() => navigate(-1)}
             className="mb-4 text-3xl text-white self-start border-2 border-white rounded-md px-4 py-1 font-bold cursor-pointer hover:scale-105 transition duration-300"
@@ -32,6 +34,8 @@ function Favorites() {
             ))}
           </div>
         )}
+        </div>
+        
       </main>
     </div>
   );

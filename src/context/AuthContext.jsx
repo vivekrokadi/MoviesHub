@@ -1,41 +1,52 @@
+
 import { createContext, useContext, useEffect, useState } from "react";
+import { account } from "../appwrite/appwriteConfig.js";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+ 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    const fetchUser = async () => {
+      try {
+        const currentUser = await account.get();
+        setUser(currentUser);
+      } catch (err) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
   }, []);
 
-  const login = (email, password) => {
-    const dummyUser = { email };
-    setUser(dummyUser);
-    localStorage.setItem("user", JSON.stringify(dummyUser));
+  
+  const register = async (email, password, name) => {
+    await account.create("unique()", email, password, name);
+    return login(email, password);
   };
 
-  const signup = (email, password) => {
-    const newUser = { email };
-    setUser(newUser);
-    localStorage.setItem("user", JSON.stringify(newUser));
+  
+  const login = async (email, password) => {
+    await account.createEmailPasswordSession(email, password);
+    const currentUser = await account.get();
+    setUser(currentUser);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await account.deleteSession("current");
     setUser(null);
-    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export const useAuth = () => useContext(AuthContext);

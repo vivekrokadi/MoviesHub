@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
-    navigate("/");
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (err) {
+      setError("Invalid email or password");
+    }
   };
 
   return (
@@ -23,28 +27,37 @@ const Login = () => {
         <h1 className="text-gradient text-3xl font-bold">Login</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
+          {error && (
+            <p className="text-red-400 text-center font-medium">{error}</p>
+          )}
+
           <input
             type="email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="rounded-lg p-2 border border-gray-500 outline-none text-white"
+            className="rounded-lg p-2 border border-gray-500 outline-none text-white bg-transparent"
+            required
           />
+
           <input
             type="password"
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="rounded-lg p-2 border border-gray-500 outline-none text-white"
+            className="rounded-lg p-2 border border-gray-500 outline-none text-white bg-transparent"
+            required
           />
 
           <button className="bg-linear-to-r from-[#b29af3] to-[#8a66e5] text-white px-4 py-2 font-medium text-xl rounded-lg">
             Login
           </button>
+
           <p className="text-gray-400 text-center">
-            Don't have an account? <Link to="/signup">Signup</Link>
+            Don&apos;t have an account?{" "}
+            <Link to="/signup" className="text-gradient font-semibold">
+              Signup
+            </Link>
           </p>
         </form>
       </div>

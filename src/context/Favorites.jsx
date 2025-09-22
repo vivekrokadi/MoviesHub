@@ -1,28 +1,37 @@
-import { useContext, createContext, useState } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-
+import { createContext, useContext, useEffect, useState } from "react";
+import { useAuth } from "./AuthContext";
+import { addFavorite, getFavorites, removeFavorite } from "../appwrite/FavoritesService";
 
 const FavoritesContext = createContext();
 
-export function FavoritesProvider({ children}) {
-    const [favorites, setFavorites] = useLocalStorage('favorites',[]);
-    const addFavorite = (movie) => {
-        if (!favorites.find((f) => f.imdbID === movie.imdbID)){
-            setFavorites([...favorites, movie]);
-        }
+export function FavoritesProvider({ children }) {
+  const { user } = useAuth();
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    if (user) {
+      getFavorites(user.$id).then(setFavorites);
+    } else {
+      setFavorites([]);
     }
+  }, [user]);
 
-    const removeFavorite = (id) => {
-        setFavorites(favorites.filter((m) => m.imdbID !== id))
-    };
+  const addToFavorites = async (movie) => {
+    if (!user) return;
+    const newFav = await addFavorite(movie, user.$id);
+    setFavorites((prev) => [...prev, newFav]);
+  };
 
-    return (
-        <FavoritesContext.Provider value={ { favorites, addFavorite, removeFavorite } }>
-            {children}
-        </FavoritesContext.Provider>
-    )
+  const removeFromFavorites = async (docId) => {
+    await removeFavorite(docId);
+    setFavorites((prev) => prev.filter((fav) => fav.$id !== docId));
+  };
+
+  return (
+    <FavoritesContext.Provider value={{ favorites, addToFavorites, removeFromFavorites }}>
+      {children}
+    </FavoritesContext.Provider>
+  );
 }
 
-export function useFavorites() {
-    return useContext(FavoritesContext)
-}
+export const useFavorites = () => useContext(FavoritesContext);

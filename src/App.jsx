@@ -22,6 +22,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/watchlist"
+          element={
+            <ProtectedRoute>
+              {/* <Watchlist /> */}
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
       </Routes>

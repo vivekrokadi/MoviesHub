@@ -1,46 +1,58 @@
-import { databases, DATABASE_ID, FAVORITES_ID } from "./appwriteConfig";
-import { ID, Query } from "appwrite";
+import { Client, Databases, ID, Query  } from "appwrite";
+import {DATABASE_ID, FAVORITES_ID} from "./appwriteConfig"
 
-export const addFavorite = async (movie, userID) => {
+const client = new Client()
+  .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) 
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); 
+
+const databases = new Databases(client);
+
+const DB_ID = DATABASE_ID;
+const COLLECTION_ID = FAVORITES_ID;
+
+export async function addFavorite(movie, userID) {
   try {
-    return await databases.createDocument(
-      DATABASE_ID,
-      FAVORITES_ID,
+    const doc = {
+      title: movie.Title,              
+      year: movie.Year,
+      poster: movie.Poster,
+      rating: movie.imdbRating,
+      language: movie.Language,
+      imdbID: movie.imdbID,
+      userID: userID,                 
+    };
+
+    const response = await databases.createDocument(
+      DB_ID,
+      COLLECTION_ID,
       ID.unique(),
-      {
-        imdbID: movie.imdbID,
-        title: movie.Title,
-        poster: movie.Poster,
-        year: movie.Year,
-        rating: movie.imdbRating,
-        language: movie.Language,
-        userID,
-      }
+      doc
     );
-  } catch (err) {
-    console.error("Error adding favorite:", err);
-    throw err;
-  }
-};
 
-export const getFavorites = async (userId) => {
+    return response;
+  } catch (error) {
+    console.error("Error adding favorite:", error);
+    throw error;
+  }
+}
+
+export async function removeFavorite(favoriteId) {
   try {
-    const res = await databases.listDocuments(DATABASE_ID, FAVORITES_ID, [
+    await databases.deleteDocument(DB_ID, COLLECTION_ID, favoriteId);
+  } catch (error) {
+    console.error("Error removing favorite:", error);
+    throw error;
+  }
+}
+
+export async function getFavorites(userID) {
+  try {
+    const response = await databases.listDocuments(DB_ID, COLLECTION_ID, [
       Query.equal("userID", userID),
     ]);
-    return res.documents;
-  } catch (err) {
-    console.error("Error fetching favorites:", err);
-    return [];
+    return response.documents;
+  } catch (error) {
+    console.error("Error fetching favorites:", error);
+    throw error;
   }
-};
-
-
-export const removeFavorite = async (docId) => {
-  try {
-    await databases.deleteDocument(DATABASE_ID, FAVORITES_ID, docId);
-  } catch (err) {
-    console.error("Error removing favorite:", err);
-    throw err;
-  }
-};
+}

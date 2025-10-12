@@ -60,9 +60,27 @@ function Watchlist() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "watched": return "bg-green-600";
-      case "watching": return "bg-blue-600";
-      case "to_watch": return "bg-yellow-600";
+      case "watched": return "bg-green-600/20";
+      case "watching": return "bg-blue-600/20";
+      case "to_watch": return "bg-yellow-600/20";
+      default: return "bg-gray-600";
+    }
+  };
+
+  const getStatusTextColor = (status) => {
+    switch (status) {
+      case "watched": return "text-green-600";
+      case "watching": return "text-blue-600";
+      case "to_watch": return "text-yellow-600";
+      default: return "bg-gray-600";
+    }
+  };
+
+  const getStatusBorderColor = (status) => {
+    switch (status) {
+      case "watched": return "border-green-600/10";
+      case "watching": return "border-blue-600/10";
+      case "to_watch": return "border-yellow-600/10";
       default: return "bg-gray-600";
     }
   };
@@ -153,32 +171,32 @@ function Watchlist() {
               }
 
               return (
-                <div key={item.$id} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div key={item.$id} className="bg-gray-800/20 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <img
                     src={movie.Poster && movie.Poster !== "N/A" ? movie.Poster : "/no-movie.png"}
                     alt={movie.Title}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-72 object-cover object-top"
                   />
                   <div className="p-4">
-                    <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">
+                    <h3 className="text-[16px] font-semibold text-white mb-2 line-clamp-2">
                       {movie.Title}
                     </h3>
                     <div className="space-y-2 text-gray-300 mb-4">
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between text-[12px]">
                         <span>Year: {movie.Year}</span>
                         <div className="flex items-center gap-1">
                           <img src="/star.svg" alt="rating" className="w-4 h-4" />
                           <span>{movie.imdbRating || "N/A"}</span>
                         </div>
                       </div>
-                      <p>Language: {movie.Language ? movie.Language.split(",")[0] : "Unknown"}</p>
+                      <p className="text-[12px]">Language: {movie.Language ? movie.Language.split(",")[0] : "Unknown"}</p>
                       
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 text-[12px]">
                         <span>Status:</span>
                         <select
                           value={item.status}
                           onChange={(e) => updateStatus(item.$id, e.target.value)}
-                          className={`${getStatusColor(item.status)} text-white px-2 py-1 rounded text-sm focus:outline-none`}
+                          className={`${getStatusColor(item.status)} ${getStatusTextColor(item.status)} ${getStatusBorderColor(item.status)} px-2 py-1 border rounded text-sm focus:outline-none text-[12px]`}
                         >
                           <option value="to_watch">To Watch</option>
                           <option value="watching">Watching</option>
@@ -189,13 +207,13 @@ function Watchlist() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => removeFromWatchlist(item.$id)}
-                        className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition-colors duration-200"
+                        className="flex-1 bg-purple-600/20 hover:bg-purple-700/20 border border-purple-600/10 text-purple-600 py-1.5 rounded-lg transition-colors duration-200 text-[14px]"
                       >
                         Remove
                       </button>
                       <button
                         onClick={() => navigate(`/movie/${item.imdbID}`)}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors duration-200"
+                        className="flex-1 bg-blue-600/20 hover:bg-blue-700/20 border border-blue-600/10  text-blue-600 py-1.5 rounded-lg transition-colors duration-200 text-[14px]"
                       >
                         Details
                       </button>

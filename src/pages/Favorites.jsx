@@ -53,20 +53,20 @@ function Favorites() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {favorites.map((movie) => (
-              <div key={movie.$id} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div key={movie.$id} className="bg-gray-800/20 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <img
                   src={movie.poster && movie.poster !== "N/A" ? movie.poster : "/no-movie.png"}
                   alt={movie.title}
-                  className="w-full h-64 object-cover"
+                  className="w-full h-72 object-cover object-top"
                 />
                 <div className="p-4">
-                  <h3 className="text-xl font-semibold text-white mb-2 line-clamp-2">
+                  <h3 className="text-[16px] font-semibold text-white mb-2 line-clamp-2">
                     {movie.title}
                   </h3>
                   <div className="space-y-1 text-gray-300">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between text-[12px]">
                       <span>Year: {movie.year}</span>
                       <div className="flex items-center gap-1">
                         <img src="/star.svg" alt="rating" className="w-4 h-4" />
@@ -77,7 +77,7 @@ function Favorites() {
                   </div>
                   <button
                     onClick={() => removeFromFavorites(movie.$id)}
-                    className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition-colors duration-200"
+                    className="w-full mt-3 bg-purple-600/10 hover:bg-purple-700/20 text-purple-600 py-2 rounded-lg transition-colors border border-purple-600/20 duration-200 text-[12px]"
                   >
                     Remove from Favorites
                   </button>

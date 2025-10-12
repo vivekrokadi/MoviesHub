@@ -60,21 +60,21 @@ const MovieCard = ({ movie }) => {
         to={`/movie/${imdbID}`}
         className="hover:scale-[1.02] transition-transform duration-300 block"
       >
-        <div className="movie-card   overflow-hidden  hover:shadow-lg transition-shadow duration-300">
+        <div className="movie-card  overflow-hidden  hover:shadow-lg transition-shadow duration-300">
           {/* Poster */}
           <img
             src={Poster && Poster !== "N/A" ? Poster : "/no-movie.png"}
             alt={Title || "Movie Poster"}
-            className="w-full h-80 object-cover"
+            className="w-full h-72 object-cover object-top"
           />
 
           {/* Title + Details */}
           <div className="p-4">
-            <h3 className="text-lg font-semibold text-white line-clamp-1">
+            <h3 className="text-[16px] font-semibold text-white line-clamp-1">
               {Title || "Untitled Movie"}
             </h3>
 
-            <div className="flex items-center gap-2 text-sm text-gray-300 mt-2 flex-wrap">
+            <div className="flex items-center gap-2 text-sm text-gray-300 mt-2 flex-wrap text-[14px]">
               {/* Rating */}
               <div className="flex items-center gap-1">
                 <img src="/star.svg" alt="star" className="w-4 h-4" />

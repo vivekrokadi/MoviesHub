@@ -10,7 +10,7 @@ import Hero from "../components/Hero";
 function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const [movies, setMovies] = useState([]); // renamed for clarity
+  const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debounceSearchTerm, setDebounceSearchTerm] = useState("");
 

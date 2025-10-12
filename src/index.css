@@ -105,10 +105,10 @@
   }
 
   .movie-card {
-    @apply bg-dark-100 p-5 rounded-2xl shadow-inner shadow-light-100/10;
+    @apply bg-dark-100 p-3 rounded-xl shadow-inner shadow-light-100/10;
 
     & img {
-      @apply rounded-lg h-auto w-full;
+      @apply rounded-xl h-auto w-full;
     }
 
     & h3 {
@@ -151,7 +151,6 @@
 
 @utility fancy-text {
   -webkit-text-stroke: 5px rgba(206, 206, 251, 0.5);
-  font-size: 190px;
   font-family: "Bebas Neue", sans-serif;
 }
 
